@@ -132,7 +132,7 @@
   <script setup>
   import { ref, computed, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
-  import { useAuth } from '../services/auth.service'
+  import { useAuth } from '../services/Auth.service'
 
   const router = useRouter()
   const { isAuthenticated, currentUser, loadUserInfo } = useAuth()
