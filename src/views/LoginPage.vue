@@ -9,7 +9,7 @@
             <v-card-subtitle class="text-center pb-4">
               Sign in to your Restaurant-Island account
             </v-card-subtitle>
-  
+
             <v-card-text>
               <v-form ref="loginForm" v-model="valid" lazy-validation @submit.prevent="handleLogin">
                 <v-text-field
@@ -21,7 +21,7 @@
                   variant="outlined"
                   class="mb-4"
                 ></v-text-field>
-  
+
                 <v-text-field
                   v-model="password"
                   :rules="passwordRules"
@@ -34,7 +34,7 @@
                   variant="outlined"
                   class="mb-2"
                 ></v-text-field>
-  
+
                 <!-- Display error message if any -->
                 <v-alert
                   v-if="errorMessage"
@@ -45,7 +45,7 @@
                 >
                   {{ errorMessage }}
                 </v-alert>
-  
+
                 <div class="d-flex justify-space-between mb-6">
                   <v-checkbox
                     v-model="rememberMe"
@@ -62,7 +62,7 @@
                     Forgot Password?
                   </v-btn>
                 </div>
-  
+
                 <v-btn
                   type="submit"
                   block
@@ -74,7 +74,7 @@
                 >
                   Sign In
                 </v-btn>
-  
+
                 <div class="mt-6 text-center">
                   <span class="text-body-2">Don't have an account? </span>
                   <v-btn variant="text" color="teal darken-1" to="/register" class="text-none px-1">
@@ -83,9 +83,9 @@
                 </div>
               </v-form>
             </v-card-text>
-  
+
             <v-divider class="my-3"></v-divider>
-  
+
             <v-card-text class="text-center">
               <p class="text-caption text-medium-emphasis mb-2">Or continue with</p>
               <v-row justify="center" class="px-4">
@@ -111,17 +111,17 @@
       </v-row>
     </v-main>
   </template>
-  
+
   <script setup>
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
-  import { useAuth } from '../services/AuthService'
+  import { useAuth } from '../services/Auth.service'
   import { useApi } from '../composables/api'
-  
+
   const router = useRouter()
   const auth = useAuth()
   const { loading, error, jsonRequest } = useApi()
-  
+
   // Form state
   const valid = ref(false)
   const loginForm = ref(null)
@@ -130,40 +130,40 @@
   const rememberMe = ref(false)
   const showPassword = ref(false)
   const errorMessage = ref('')
-  
+
   // Validation rules
   const emailRules = [
     (v) => !!v || 'Email is required',
     (v) => /.+@.+\..+/.test(v) || 'Email must be valid',
   ]
-  
+
   const passwordRules = [
     (v) => !!v || 'Password is required',
     (v) => v.length >= 6 || 'Password must be at least 6 characters',
   ]
-  
+
   // Form submission handler
   const handleLogin = async () => {
     if (!loginForm.value.validate()) return
-  
+
     errorMessage.value = ''
-  
+
     try {
       // Use the jsonRequest method with correct Laravel endpoint
-      const response = await jsonRequest('login', 'POST', { 
+      const response = await jsonRequest('login', 'POST', {
         email: email.value,
-        password: password.value 
+        password: password.value
       })
-  
+
       // Store the token and user data
       localStorage.setItem('auth_token', response.token)
       auth.login(response.token, response.user)
-  
+
       // If remember me is checked, store in localStorage
       if (rememberMe.value) {
         localStorage.setItem('remember_user', 'true')
       }
-  
+
       // Redirect to dashboard or home page
       router.push('/welcome')
     } catch (err) {
@@ -178,7 +178,7 @@
     }
   }
   </script>
-  
+
   <style scoped>
   .login-container {
     min-height: calc(100vh - 64px);

@@ -4,6 +4,7 @@ import AboutView from '../views/AboutView.vue'
 import TestPage from '../views/TestPage.vue'
 import ContactUsView from '../views/ContactUsView.vue'
 import LoginPage from '../views/LoginPage.vue'
+import WelcomePage from '@/views/WelcomePage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +16,7 @@ const router = createRouter({
     },
     {
       path: '/about-us',
-      name: 'about',      
+      name: 'about',
       component: AboutView
     },
     {
@@ -32,7 +33,14 @@ const router = createRouter({
       path: '/contact-us',
       name: 'ContactUs',
       component: ContactUsView
-    }
+    },
+    {
+        path: '/Welcome',
+        name: 'Welcome',
+        component: WelcomePage
+      },
+
+
   ]
 })
 
